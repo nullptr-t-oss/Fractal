@@ -6,7 +6,7 @@
 Just execute the index.html file
 ```
 
-Or just simply visit this [link!](https://n0t-human.github.io/Fractal/)
+Or just simply visit this [link!](https://0x-br0k3n.github.io/Fractal/)
 
 Trying to generate Fractals using html , css & js 
 
