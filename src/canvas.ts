@@ -408,7 +408,7 @@ const renderFractal = gpu.createKernel(function(initial_zx, initial_zy, minX, ma
   let cx = coord_x;
   let cy = coord_y;  
   
-  if(mode == 0) {
+  if(mode < 0.5) {
     zx = coord_x;
     zy = coord_y;
     cx = initial_cx;
@@ -418,7 +418,7 @@ const renderFractal = gpu.createKernel(function(initial_zx, initial_zy, minX, ma
   let val = itr;
   
   for(let i = 0; i <= 1000; i++) {
-    if(i > itr) {
+    if(i * 1.0 > itr) {
       val = itr;
       break;
     }
@@ -430,7 +430,7 @@ const renderFractal = gpu.createKernel(function(initial_zx, initial_zy, minX, ma
     zy = new_zy;
     
     if ((zx * zx + zy * zy) > inf) {
-     val = i;
+     val = i * 1.0;
      break;
     }
   }
@@ -450,7 +450,7 @@ const renderFractal = gpu.createKernel(function(initial_zx, initial_zy, minX, ma
   }
 
 })
-.setPrecision('unsigned')
+.setPrecision('single')
 .setOutput([window.innerWidth, window.innerWidth])
 .setGraphical(true);
 
