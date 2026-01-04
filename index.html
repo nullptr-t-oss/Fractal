@@ -1,107 +1,187 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Fractals</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <canvas id="mesh" class="mesh" allow-"fast-rendering" webgl="true"></canvas>
-
-
-    <div class="section">
-      Generate Julia Set
-      <div class="toggle" style="position: absolute; right : 7%">
-        <label>
-            <input class="toggle-checkbox" type="checkbox" id="set-type">
-            <div class="toggle-slot">
-                <div class="toggle-button"></div>
-            </div>
-        </label>
-    </div>
-    </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
     
-    <div class="section" style="display:grid;position: relative">
-        <h1 style="margin-top:0%">Change Constant</h1>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <title>Fractal</title>
+  </head>
+  <body>
+    <div id="app">
+    
+        <!-- Heading -->
+        <header class="app-header">
+            <span class="title">Fractal Generator</span>
         
-        Real Part
-        <div style="display:flex;align-content: center ; width:100%;
-    align-items: center;">
-           <div class="range" style="padding:6% 6% 6% 0%;width: 90%; margin-left: 0%">
-            <input type="range" min="-2" max="2" value="0" class="slider" id="cxInput" step="0.01" style="width: 100%;--thumb-position: 50%;margin-left: 0%;">
-           
+            <div class="menu-wrapper">
+                <md-icon-button id="menu-anchor">
+                    <md-icon>more_vert</md-icon>
+                </md-icon-button>
+          
+                <md-menu id="app-menu" anchor="menu-anchor">
+                    <md-menu-item>
+                        <md-text-button onclick="downloadImage()">
+                            Save Image
+                            <md-icon slot="icon">file_save</md-icon>
+                        </md-text-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-text-button onclick="resetSettings()">
+                            Reset Settings
+                            <md-icon slot="icon">settings_backup_restore</md-icon>
+                        </md-text-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <div class="icon-button-wrapper">
+                            <md-filled-tonal-icon-button id="debug-btn">
+                                <md-icon>bug_report</md-icon>
+                            </md-filled-tonal-icon-button>
+                            <md-filled-tonal-icon-button onclick="about()">
+                                <md-icon>info</md-icon>
+                            </md-filled-tonal-icon-button>
+                        </div>
+                    </md-menu-item>
+                </md-menu>
             </div>
-         <span id="cxVal" style="width: 22%;">cx: 0</span>
-        </div>
-       
-       Imaginary Part
-          <div style="display:flex;align-content: center; width:100%; align-items: center;">
-              <div class="range" style="padding: 6% 6% 6% 0%;width: 90%;">
-            <input type="range" min="-2" max="2" value="-0.7" class="slider" id="cyInput" step="0.01" style="width: 100%;--thumb-position: 32.5%; margin-left: 0%;">
-          </div>
-            
-          <span id="cyVal" style="width: 22%;">cy: -0.7</span>
-          </div>
-
-    </div>
-    
-    
-    
-
-    <div class="section" style="display:grid;position: relative">
-        <h1 style="margin-top:0%">Color</h1>
-       Hue
-      <div style="display:flex;align-content: center ; width:100%;
-    align-items: center;">
-           <div class="range" style="padding:6% 6% 6% 0%;width: 90%; margin-left: 0%">
-            <input type="range" min="0" max="360" value="160" class="slider" id="colorRange" style="width: 100%;--thumb-position: 44.44%;margin-left: 0%;">
-           
-            </div>
-         <span id="colorVal" style="width: 22%;">160</span>
-        </div>
+        </header>
+        <md-divider></md-divider>
         
-        Color Spread
-       
-          <div style="display:flex;align-content: center; width:100%; align-items: center;">
-              <div class="range" style="padding: 6% 6% 6% 0%;width: 90%;">
-            <input type="range" min="1" max="10" value="1" class="slider" id="spread" step="0.1" style="width: 100%;--thumb-position: 1%; margin-left: 0%;">
+        <!-- Logging -->
+        <md-dialog id="log-dialog">
+          <div slot="headline">
+            <md-icon style="vertical-align: middle; margin-right: 8px;">bug_report</md-icon>
+            System Logs
           </div>
-            
-          <span id="spreadVal" style="width: 22%;">1</span>
-          </div>
-      
-      <div class="section" style="padding: 5% 5% 5% 0%">
-      Anti-Aliasing 
-      <div class="toggle" style="position: absolute; right : 7%">
-        <label>
-            <input class="toggle-checkbox" type="checkbox" id="aliasing">
-            <div class="toggle-slot">
-                <div class="toggle-button"></div>
+        
+          <form slot="content" id="log-form" method="dialog">
+            <div class="log-container">
+              <md-list id="log-list">
+                <md-list-item>
+                  <div slot="headline" style="color: gray; font-style: italic;">No logs yet...</div>
+                </md-list-item>
+              </md-list>
             </div>
-        </label>
-    </div>
-    </div>
-      
+          </form>
+        
+          <div slot="actions">
+            <md-text-button id="clear-logs-btn" style="color: var(--md-sys-color-error);">
+              Clear
+            </md-text-button>
+            <md-text-button id="close-logs-btn" value="close">
+              Close
+            </md-text-button>
+          </div>
+        </md-dialog>
+        
+        <!-- Canvas -->
+        <div id="canvas-wrapper">
+            <canvas id="mesh" class="mesh">
+        </div>      
+        
+        <!-- Controls -->
+        <div id="controls-wrapper">
+            <h2>Settings</h2>
+            <md-divider></md-divider>
 
+            <div class="control-row">
+                <md-icon class="icon">cycle</md-icon>
+                <div class="slider-container">
+                    <md-slider id="itr-slider" min="10" max="1000" value="1000" labeled></md-slider>
+                </div>
+                <md-icon-button onclick="showInfo('iterations')">
+                    <md-icon>info</md-icon>
+                </md-icon-button>
+            </div>
+                
+            <md-divider inset></md-divider>
+
+            <div class="control-row">
+                <md-icon class="icon">format_paint</md-icon>
+                <div class="slider-container">
+                    <md-slider id="hue-slider" min="0" max="1" step="0.001" value="0.772" labeled></md-slider>
+                </div>
+                <md-icon-button onclick="showInfo('hue')">
+                    <md-icon>info</md-icon>
+                </md-icon-button>
+            </div>
+            
+            <md-divider inset></md-divider>
+            
+            <div class="control-row">
+                <span class="icon">Fractal Type</span>
+                <md-filter-chip class="set-chip" label="Mandelbrot" value="1" selected></md-filter-chip>
+                <md-filter-chip class="set-chip" label="Julia" value="0"></md-filter-chip>
+                <md-icon-button onclick="showInfo('type')">
+                    <md-icon>info</md-icon>
+                </md-icon-button>
+            </div>
+            
+            <md-divider inset></md-divider>
+            
+            <div class="control-row">
+                <span class="icon">cx</span>
+                <div class="slider-container">
+                    <md-slider id="cx-slider" min="-1" max="1" step="0.001" value="0" labeled></md-slider>
+                </div>
+                <md-icon-button onclick="showInfo('cx')">
+                    <md-icon>info</md-icon>
+                </md-icon-button>
+            </div>
+            
+            <md-divider inset></md-divider>
+            
+            <div class="control-row">
+                <span class="icon">cy</span>
+                <div class="slider-container">
+                    <md-slider id="cy-slider" min="-1" max="1" step="0.001" value="0" labeled></md-slider>
+                </div>
+                <md-icon-button onclick="showInfo('cy')">
+                    <md-icon>info</md-icon>
+                </md-icon-button>
+            </div>
+            
+        </div>
+
+        <md-dialog id="info-dialog">
+          <div slot="headline" id="dialog-title">Info</div>
+          <div slot="content" id="dialog-content"></div>
+          <div slot="actions">
+            <md-filled-button onclick="document.getElementById('info-dialog').close()">OK</md-text-button>
+          </div>
+        </md-dialog>
+        
+        <!-- Theme -->
+        <md-fab id="theme-fab" variant="primary">
+            <md-icon slot="icon">palette</md-icon>
+        </md-fab>
+
+        <md-dialog id="theme-dialog">
+        <div slot="headline">Select a Theme</div>
+  
+            <form slot="content" id="theme-form" method="dialog">
+                <p>Choose your preferred accent color:</p>
+    
+                <md-chip-set>
+                  <md-filter-chip class="theme-chip" label="Default (Green)" name="theme" value="default" selected></md-filter-chip>
+                  <md-filter-chip class="theme-chip" label="Blue" name="theme" value="blue"></md-filter-chip>
+                  <md-filter-chip class="theme-chip" label="Red" name="theme" value="red"></md-filter-chip>
+                  <md-filter-chip class="theme-chip" label="Purple" name="theme" value="purple"></md-filter-chip>
+                </md-chip-set>
+            </form>
+            
+            <div slot="actions">
+              <md-outlined-button form="theme-form" value="cancel">Close</md-text-button>
+            </div>
+        </md-dialog>
+        
     </div>
-    
-    
-    
-    
-
-    
-    
-
-    <div class="section">
-        Under Construction 😅
-    </div>
-
-    <div class="section">
-        Under Construction 😅
-    </div>
-
-    <script src="main.js"></script>
-</body>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

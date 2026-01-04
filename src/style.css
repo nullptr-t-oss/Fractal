@@ -1,0 +1,179 @@
+.google-sans {
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings:
+    "GRAD" 0;
+}
+
+:root {
+  font-family: 'google-sans';
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  --md-sys-color-primary: #46685b;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #c9efdc;
+  --md-sys-color-on-primary-container: #022016;
+  --md-sys-color-secondary: #4d6357;
+  --md-sys-color-surface: #f5fbf7;
+  --md-ref-typeface-plain: 'google-sans', sans-serif;
+  --md-dialog-headline-font: 'google-sans', sans-serif;
+}
+
+:root.theme-blue {
+  --md-sys-color-primary: #0061a4;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #d1e4ff;
+  --md-sys-color-on-primary-container: #001d36;
+  --md-sys-color-secondary: #535f70;
+  --md-sys-color-surface: #fdfcff;
+}
+
+:root.theme-red {
+  --md-sys-color-primary: #b91d22;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #ffdad6;
+  --md-sys-color-on-primary-container: #410002;
+  --md-sys-color-secondary: #775656;
+  --md-sys-color-surface: #fffbff;
+}
+
+:root.theme-purple {
+  --md-sys-color-primary: #6d4ea1;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #eaddff;
+  --md-sys-color-on-primary-container: #24005b;
+  --md-sys-color-secondary: #625b71;
+  --md-sys-color-surface: #fffbff;
+}
+
+body {
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+md-fab {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
+md-menu {
+  --md-menu-container-color: var(--md-sys-color-surface);
+  padding: 0; 
+}
+
+md-menu-item {
+  --md-menu-item-container-color: var(--md-sys-color-surface);
+  padding: 0;
+  width: 100%;
+}
+
+md-filled-tonal-icon-button {
+  --md-filled-tonal-icon-button-icon-color: var(--md-sys-color-primary);
+  --md-filled-tonal-icon-button-container-color: var(--md-sys-color-primary-container);
+}
+
+md-dialog {
+  --md-dialog-container-color: var(--md-sys-color-surface);
+}
+
+md-filter-chip {
+  --md-filter-chip-selected-container-color: var(--md-sys-color-primary-container);
+}
+
+md-list, md-list-item {
+  width: 100%;
+}
+
+.debug {
+  --md-filled-tonal-icon-button-icon-color: var(--md-sys-color-primary);
+  --md-filled-tonal-icon-button-unselected-container-color: #c9efdc;
+  --md-filled-tonal-icon-button-selected-container-color: #ffdad6;
+}
+
+.app-header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: var(--md-sys-color-surface);
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.icon-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.log-container {
+  max-height: 400px; 
+  overflow-y: auto;
+  width: 100%;
+  min-width: 300px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 8px;
+}
+
+.log-item-error {
+  color: var(--md-sys-color-error);
+}
+.log-item-warn {
+  color: var(--md-sys-color-tertiary); 
+}
+.log-timestamp {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--md-sys-color-outline);
+  margin-right: 8px;
+}
+
+#controls-wrapper {
+  padding: 16px;
+  background: var(--md-sys-color-surface, #fff); 
+  border-radius: 16px;
+  
+  max-height: 27vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+h2 {
+  margin: 0 0 10px 0;
+  font-family: Roboto, sans-serif;
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  justify-content: space-evenly; /* Spacing between icon, slider, and button */
+}
+
+.icon {
+  opacity: 0.7;
+  flex-shrink: 0; 
+}
+
+.slider-container {
+  flex-grow: 1; 
+  display: flex;
+}
+
+md-slider {
+  width: 100%;
+}
