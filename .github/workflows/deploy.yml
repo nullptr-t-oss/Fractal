@@ -26,6 +26,11 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
+          
+      - name: Install Linux Deps (for gpu.js/gl)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libxi-dev libglu1-mesa-dev libglew-dev pkg-config
 
       - name: Install dependencies
         run: npm ci
